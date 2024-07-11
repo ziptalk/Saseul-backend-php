@@ -1,0 +1,26 @@
+#!/bin/php
+<?php
+
+# autoload;
+require_once("load_core.php");
+require_once("load_saseul.php");
+
+use Core\Loader;
+use Saseul\Data\Env;
+
+ini_set('memory_limit', -1);
+
+# build
+$saseul_root = SOURCE. DS. 'Saseul';
+
+Loader::build([
+    'api_root' => $saseul_root. DS. 'Api',
+    'script_root' => $saseul_root. DS. 'Script',
+    'service_root' => $saseul_root. DS. 'Service',
+]);
+
+# add data directories;
+Env::init();
+
+# execute;
+print_r(PHP_EOL. 'Installed successfully. '. PHP_EOL);

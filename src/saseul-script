@@ -1,0 +1,33 @@
+#!/bin/php
+<?php
+
+# autoload;
+require_once("load_core.php");
+require_once("load_saseul.php");
+
+use Core\Loader;
+use Saseul\Data\Env;
+
+ini_set('memory_limit', -1);
+
+# build (temporary)
+$saseul_root = SOURCE. DS. 'Saseul';
+
+Loader::build([
+    'api_root' => $saseul_root. DS. 'Api',
+    'script_root' => $saseul_root. DS. 'Script',
+    'service_root' => $saseul_root. DS. 'Service',
+]);
+
+# add data directories;
+Env::init();
+
+if (!Env::exists()) {
+    print_r(PHP_EOL. 'The env file does not exist. Starting to create an env file. '. PHP_EOL);
+    Loader::script(['saseul-script', 'SetEnv']);
+    exit;
+}
+
+# execute;
+Env::load();
+Loader::script($argv);

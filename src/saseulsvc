@@ -1,0 +1,15 @@
+#!/usr/bin/php
+<?php
+
+# autoload;
+require_once("load_core.php");
+require_once("load_saseul.php");
+
+use Core\Loader;
+use Saseul\Data\Env;
+
+ini_set('memory_limit',-1);
+
+# execute;
+Env::load();
+Loader::service(__FILE__, $argv);
